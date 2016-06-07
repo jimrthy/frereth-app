@@ -1,4 +1,11 @@
 (ns com.frereth.app.system
+  "This really needs to require/use component-dsl
+Because the individual apps need to and shouldn't.
+They should supply the structure/dependency info (though
+calculating dependencies automatically would be better),
+and then we should cope w/ the component-level stuff.
+
+That's pretty much the entire point here."
   (:require [schema.core :as s]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -40,7 +47,12 @@
 ;;; Public
 
 (s/defn ^:always-validate big-bang
-  "Realistically, this is actually a clojurescript function"
+  "Realistically, this is actually a clojurescript function.
+
+And it doesn't really much well with actual browser interactions.
+
+This might be great for interacting with a single Canvas, but
+it falls apart when you start looking at things like DOM events."
   ([initial-state :- world-state]
    (big-bang initial-state {}))
   ([initial-state :- world-state
