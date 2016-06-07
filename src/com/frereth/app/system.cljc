@@ -1,4 +1,4 @@
-(ns com.frereth.app
+(ns com.frereth.app.system
   (:require [schema.core :as s]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
