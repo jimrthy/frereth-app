@@ -33,6 +33,14 @@ Q: Is that a good or bad thing?
 How does the system interpret interpret whatever's returned
 from on-render?
 
+## State
+
+Initially specified in a map under the :state key.
+
+If an event handler's return map contains a :swap-state key,
+the function in the associated value will be called to modify
+what's currently there.
+
 ## :render-code
 
 Pieces that are run inside a sandbox on the renderer.
@@ -41,19 +49,28 @@ Currently I'm leaning toward defining these as a vector
 of (defn...) top-level forms.
 
 A map of function names to bodies seems like it might
-be a better choice.
+be a better choice. But it also looks very different
+from what "everyone" already knows. Assuming they
+know clojurescript, which is a silly assumption.
 
-### on-render
-
-This returns a sequence of instructions that will be passed along
-to the rendering engine to actually draw each updated frame.
+Maybe it should be represented this way internally. Or
+maybe that's what the cljs compiler already does.
 
 ## :render-events
 
 Right now I have two different kinds of events.
 
-Each can optionally return a message that will be forwarded
-back to the server/Universe.
+Each can optionally return a message which will be forwarded
+back to the either itself or the server/Universe. That choice
+depends on where the handler's registered. (TODO: make sure
+I have error handling to verify that message responses do have
+registered handlers. For that matter, they really need specs
+to validate what's being sent back and forth).
+
+### on-render
+
+This returns a sequence of instructions that will be passed along
+to the rendering engine to actually draw each updated frame.
 
 ### DOM events
 
@@ -79,4 +96,5 @@ onmessage function.
 
 ## Universe Events
 
-These functions handle messages from the browser.
+Map of browser-side events to the handlers that must happen
+on the server.
